@@ -1,0 +1,25 @@
+RewriteEngine On
+RewriteBase /
+
+Options -Indexes
+
+#RedirectMatch 403 ^/app/?
+
+RewriteRule ^articles/([a-z]+)/([0-9]+)$ articles/?category=$1&post=$2 [L]
+RewriteRule ^articles/([a-z]+)\??(page=[0-9]+)?$ articles/?category=$1&$2 [L]
+
+
+
+#RewriteCond %{REQUEST_FILENAME} -F
+#RewriteCond %{REQUEST_FILENAME} !index\.php$
+#RewriteCond %{REQUEST_FILENAME} !404\.php$
+#RewriteRule !\.(jpg|png|css)$ 404.php [L]
+
+
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteRule \.* 404.php [L]
+
+
+#RewriteCond %{REQUEST_URI} (\.+).php$
+#RewriteRule \.* 404.php [L]
