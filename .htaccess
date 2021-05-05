@@ -5,7 +5,7 @@ Options -Indexes
 
 #RedirectMatch 403 ^/app/?
 
-RewriteRule ^articles/([a-z]+)/([0-9]+)$ articles/?category=$1&post=$2 [L]
+RewriteRule ^articles/([a-z]+)/([—0-9a-zA-Z_]+)$ articles/?category=$1&post=$2 [L]
 RewriteRule ^articles/([a-z]+)\??(page=[0-9]+)?$ articles/?category=$1&$2 [L,QSA]
 
 

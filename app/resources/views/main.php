@@ -4,7 +4,8 @@
         <strong class="d-inline-block mb-2 text-primary text-capitalize"><?= $article['name']; ?></strong>
         <h3 class="mb-0"><?= $article['title']; ?></h3>
         <div class="mb-1 text-muted"><?= $article['date']; ?></div>
-        <a href="/articles/<?=$article['category_code'];?>/<?=$article['post_code'];?>" class="stretched-link">Continue reading</a>
+        <div class="mb-1 text-success fw-bold">Автор: <?= $article['author']; ?></div>
+        <a href="/articles/<?=$article['category_code'];?>/<?=$article['furl'];?>" class="stretched-link">Continue reading</a>
     </div>
 </div>
 <?php endforeach; ?>

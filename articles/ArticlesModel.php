@@ -16,7 +16,7 @@ class ArticlesModel extends Model
     public function getCategoryPosts ($code, $page = 1) {
         $pageData['articles'] = $this->articlesSelection(['categoryCode' => $code, 'page' => $page]);
         $pageData['title'] = $pageData['articles'][0]['name'];
-        $pageData['pages'] = ceil($this->categoryPostsAmount($code) / 6);
+        $pageData['pages'] = ceil($this->categoryPostsAmount($code) / $GLOBALS['limit']);
 
         return $pageData;
     }

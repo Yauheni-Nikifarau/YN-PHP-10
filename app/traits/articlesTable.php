@@ -16,7 +16,7 @@ trait articlesTable {
             $where = 'WHERE ';
             $whereOptions = [];
             if (isset($options['code'])) {
-                $whereOptions[] = "post_code = '{$options['code']}'";
+                $whereOptions[] = "posts.id = '{$options['code']}'";
             }
             if (isset($options['categoryCode'])) {
                 $whereOptions[] = "category_code = '{$options['categoryCode']}'";
@@ -25,18 +25,23 @@ trait articlesTable {
         }
         $page = $options['page'] ?? '1';
         $page = (int) $page;
-        $offset = 6 * ($page - 1);
+        $offset = $GLOBALS['limit'] * ($page - 1);
         $offset = (string) $offset;
-        $sql = "SELECT *
-                FROM posts JOIN categories
-                ON posts.category_id = categories.id
+        $sql = "SELECT posts.id, title, post_code, content, date, categories.name, category_code, authors.name AS 'author'
+                FROM posts 
+                INNER JOIN categories ON posts.category_id = categories.id
+                INNER JOIN authors ON posts.author_id = authors.id
                 $where
                 ORDER BY date DESC
-                LIMIT 6
+                LIMIT {$GLOBALS['limit']}
                 OFFSET $offset";
         $res = $this->db->query($sql);
         if ($res !== false) {
-            return $res->fetchAll(PDO::FETCH_ASSOC);
+            $posts = $res->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($posts as $k => $post) {
+                $posts[$k]['furl'] = toFriendlyUrl(mb_substr($post['title'], 0, 20)) . '_' . $post['id'];
+            }
+            return $posts;
         }
         return false;
     }
